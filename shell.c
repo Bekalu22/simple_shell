@@ -6,7 +6,7 @@
  * @v: command.
  * @t: error of the command.
  * @n: name of the exe.
- * Return: 0
+ * Return: 0 sucess
  */
 int execute(char line2[], int cont, char *v, char *t, char *n)
 {
