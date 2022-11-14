@@ -3,7 +3,7 @@
  * main - mini shell
  * @ac: number of arguments.
  * @av: arguments.
- * Return: Always 0.
+ * Return: Always 0 when it sucess
  */
 int main(int ac, char **av)
 {
