@@ -4,7 +4,7 @@
 /**
  * split_command - split a line into tokens.
  * @line: line to split.
- * Return: An array of tokens.
+ * Return: An array of token.
 **/
 char **split_command(char *line)
 {
