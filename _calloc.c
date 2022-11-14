@@ -7,7 +7,7 @@
  * Return: returns a pointer to the allocated memory.
  * The memory is set to zero
  * If nmemb or size is 0, then _calloc returns NULL
- * If malloc fails, then _calloc returns NULL
+ * If malloc fails, then or _calloc returns NULL
  */
 
 void *_calloc(unsigned int nmemb, unsigned int size)
