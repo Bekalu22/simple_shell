@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * salir - exit the shell.
- * @line: line of commands
+ * @line: line of command
  * @line2: line to free
  * @cont: number of commands.
  * @com: array of command and arguments.
