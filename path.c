@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * gpath - Gets the PATH environment.
+ * gpath - Gets the PATH environments.
  * Return: Pointer value of PATH.
  */
 char *gpath()
