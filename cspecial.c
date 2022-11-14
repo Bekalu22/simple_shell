@@ -2,7 +2,7 @@
 /**
  * flaqs - search delimiters in the command
  * @line2: command
- * Return: 1 is found, else 0
+ * Return: 1 is found, or 0
  */
 int flaqs(char line2[])
 {
