@@ -19,7 +19,7 @@ char *readc(void)
  * function for getline
  * @dest: destination.
  * @src: source.
- * Return: dest.
+ * Return: destination.
  */
 char *_cpy(char *dest, char *src)
 {
