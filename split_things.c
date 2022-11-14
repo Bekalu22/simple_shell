@@ -2,7 +2,7 @@
 /**
  * splitSpace - cut each space
  * @argv: array save cut
- * @line2: name of filecommand complete
+ * @line2: name of file command complete
  * Return: 0
  */
 void splitSpace(char *argv[], char line2[])
