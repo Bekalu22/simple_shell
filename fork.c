@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * _fork - forks the process.
+ * _fork - forks the processes.
  * @l2: command line.
  * @l: line to free.
  * @c: number of commands.
