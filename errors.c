@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * errors - prints the error with it's type.
+ * errors - print the error with it's type.
  * @cont: number of commands.
  * @var: command.
- * @type: error of the command.
+ * @type: error of the commands.
  * @name: name of the exe.
 **/
 void errors(int cont, char *var, char *type, char *name)
