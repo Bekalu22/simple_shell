@@ -2,7 +2,7 @@
 /**
  * sigintHandler -  Signal Handler for SIGINT
  * When Ctrl+C is pressed, SIGINT signal is generated,
- * we can catch this signal and run our defined signal handler.
+ * we can catch this signal and run our defined signal handlers.
  * @sig_num: Reset handler to catch SIGINT next time.
  * Return: 0
  */
