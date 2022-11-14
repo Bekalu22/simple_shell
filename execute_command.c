@@ -7,7 +7,7 @@
  * @n: name of the exe.
  * @args: aguments of the command.
  * @p: line of command.
- * Return: an integer.
+ * Return: an number.
 **/
 int execute_command(char **args, char *p, int cont, char *v, char *t, char *n)
 {
