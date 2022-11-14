@@ -5,7 +5,7 @@
  * @ptr: pointer previously allocated.
  * @old_size: size of ptr
  * @new_size: new size
- * Return: ptr or NULL
+ * Return: pointer or NULL
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
