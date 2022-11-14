@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * _env - prints the enviroment varibles.
- * @com: commands
+ * @com: command
 **/
 void _env(char **com)
 {
