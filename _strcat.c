@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * *_strcat - Concat two strings
+ * *_strcat - Concat two string
  * @dest: The string that receives
- * @src: 2 string
+ * @src: 2 strings
  * Return: dest
  **/
 char *_strcat(char *dest, char *src)
