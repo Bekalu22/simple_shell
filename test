@@ -1,4 +1,4 @@
-clear
 ls
+clear
 pwd
 ls -la /usr
