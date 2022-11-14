@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
- * comments - remove comments from the command line.
+ * comments - remove comments from the command lines.
  * @line: command line.
- * Return: the command line without comments.
+ * Return: the command line without comment.
 **/
 char *comments(char *line)
 {
