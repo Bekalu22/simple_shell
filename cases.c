@@ -7,7 +7,7 @@
  * @v: command.
  * @t: error of the command.
  * @n: name of the exe.
- * Return: 0
+ * Return: 0 when it sucess
  */
 int run(char line2[], char *dpath[], int cont, char *v, char *t, char *n)
 {
