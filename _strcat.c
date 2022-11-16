@@ -1,25 +1,34 @@
-#include "shell.h"
+echo: echo [-neE] [arg ...]
+    Write arguments to the standard output.
 
-/**
- * *_strcat - Concat two string
- * @dest: The string that receives
- * @src: 2 strings
- * Return: dest
- **/
-char *_strcat(char *dest, char *src)
-{
-	int i = 0, j = 0;
+    Display the ARGs, separated by a single space character and followed by a
+    newline, on the standard output.
 
-	while (dest[i])
-	{
-		i++;
-	}
-	while (src[j])
-	{
-		dest[i] = src[j];
-		i++;
-		j++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
+    Options:
+      -n        do not append a newline
+      -e        enable interpretation of the following backslash escapes
+      -E        explicitly suppress interpretation of backslash escapes
+
+    `echo' interprets the following backslash-escaped characters:
+      \a        alert (bell)
+      \b        backspace
+      \c        suppress further output
+      \e        escape character
+      \E        escape character
+      \f        form feed
+      \n        new line
+      \r        carriage return
+      \t        horizontal tab
+      \v        vertical tab
+      \\        backslash
+      \0nnn     the character whose ASCII code is NNN (octal).  NNN can be
+                0 to 3 octal digits
+      \xHH      the eight-bit character whose value is HH (hexadecimal).  HH
+                can be one or two hex digits
+      \uHHHH    the Unicode character whose value is the hexadecimal value HHHH.
+                HHHH can be one to four hex digits.
+      \UHHHHHHHH the Unicode character whose value is the hexadecimal value
+                HHHHHHHH. HHHHHHHH can be one to eight hex digits.
+
+    Exit Status:
+    Returns success unless a write error occurs.
