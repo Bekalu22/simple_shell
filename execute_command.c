@@ -1,50 +1,41 @@
 #include "shell.h"
 /**
- * execute_command - exe.
- * @cont: number of commands.
- * @v: command.
- * @t: error of the command.
- * @n: name of the exe.
- * @args: aguments of the command.
- * @p: line of command.
- * Return: an number.
-**/
-int execute_command(char **args, char *p, int cont, char *v, char *t, char *n)
+ * history - Fill File By User Input
+ * @input: User Input
+ * Return: -1 Fail 0 Succes
+ */
+int history(char *input)
 {
-	pid_t pid, wpid;
-	int status;
-	char us[128] = "/bin", *aux = "/b";
-	(void)wpid;
+	char *filename = ".simple_shell_history";
+	ssize_t fd, w;
+	int len = 0;
 
-	if (p[0] == aux[0] && p[1] == aux[1])
+	if (!filename)
+		return (-1);
+	fd = open(filename, O_CREAT | O_RDWR | O_APPEND, 00600);
+	if (fd < 0)
+		return (-1);
+	if (input)
 	{
-		_strcpy(us, p);
-	}
-	else
-	{
-		_strcat(us, "/");
-		_strcat(us, p);
-	}
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execve(us, args, NULL) == -1)
-		{
-			errors(cont, v, t, n);
-			return (0);
-		}
-		exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
-	{
-		errors(cont, v, t, n);
-		return (0);
-	}
-	else
-	{
-		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		while (input[len])
+			len++;
+		w = write(fd, input, len);
+		if (w < 0)
+			return (-1);
 	}
 	return (1);
+}
+/**
+ * free_env - Free Enviroment Variable Array
+ * @env:  Environment variables.
+ * Return: Void
+ */
+void free_env(char **env)
+{
+	int i;
+
+	for (i = 0; env[i]; i++)
+	{
+		free(env[i]);
+	}
 }
