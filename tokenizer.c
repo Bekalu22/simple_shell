@@ -2,8 +2,8 @@
 
 /**
  * **strtow - splits a string into words. using a spac
- * @str: the input array of characters and strings
- * @d: the delimeter string
+ * @str: the input array of character and strings
+ * @d: the delimeter strings
  * Return: a pointer to an array of strings, or NULL on failure
  */
 
