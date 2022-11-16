@@ -1,191 +1,88 @@
 #include "shell.h"
-/**
- * run - execute command
- * @line2: command
- * @dpath:directories the path
- * @cont: number of commands.
- * @v: command.
- * @t: error of the command.
- * @n: name of the exe.
- * Return: 0 when it sucess
- */
-int run(char line2[], char *dpath[], int cont, char *v, char *t, char *n)
-{
-	int x = 0, ex = 0;
-	char *dpathcmd;
-	char **argv = NULL;
 
-	x = (count(line2, ' ')) + 2;
-	argv = _calloc(x, sizeof(char *));
-	splitSpace(argv, line2);
-	dpathcmd = checkPath(dpath, argv[0]);
-	if (dpathcmd == NULL)
+/**
+ * handle_builtin - Handle Builtin Command
+ * @cmd: Parsed Command
+ * @er:statue of last Excute
+ * Return: -1 Fail 0 Succes (Return :Excute Builtin)
+ */
+
+int handle_builtin(char **cmd, int er)
+{
+	 bul_t bil[] = {
+		{"cd", change_dir},
+		{"env", dis_env},
+		{"help", display_help},
+		{"echo", echo_bul},
+		{"history", history_dis},
+		{NULL, NULL}
+	};
+	int i = 0;
+
+	while ((bil + i)->command)
 	{
-		free(dpathcmd);
-		errors(cont, v, t, n);
+		if (_strcmp(cmd[0], (bil + i)->command) == 0)
+		{
+			return ((bil + i)->fun(cmd, er));
+		}
+		i++;
 	}
-	else
-		ex = execve(dpathcmd, argv, environ);
-	free(argv);
-	return (ex);
+	return (-1);
 }
 /**
- * scolon - execute two command
- * @copy: comand complete
- * @dpath: directory path
- * @cont: number of commands.
- * @v: command.
- * @t: error of the command.
- * @n: name of the exe.
- * Return: 0
+ * check_cmd - Excute Simple Shell Command (Fork,Wait,Excute)
+ *
+ * @cmd:Parsed Command
+ * @input: User Input
+ * @c:Shell Excution Time Case of Command Not Found
+ * @argv:Program Name
+ * Return: 1 Case Command Null -1 Wrong Command 0 Command Excuted
  */
-int scolon(char copy[], char *dpath[], int cont, char *v, char *t, char *n)
+int check_cmd(char **cmd, char *input, int c, char **argv)
 {
-	int x = 0, a = 0, b = 0, ex = 0, status = 0;
-	char *dpathcmd, *ex1, *ex2;
-	char *ppp[2], **argv1 = NULL, **argv2 = NULL;
-	pid_t pid2, wpid;
-	(void)wpid;
+	int status;
+	pid_t pid;
 
-split(copy, ppp, ";"), a = _strlen(ppp[0]), b = _strlen(ppp[1]);
-	ex1 = _calloc(a, sizeof(char *)), ex2 = _calloc(b, sizeof(char *));
-	_strcpy(ex1, ppp[0]), _strcpy(ex2, ppp[1]);
-	x = (count(ex1, ' ')) + 2, argv1 = _calloc(x, sizeof(char *));
-	splitSpace(argv1, ex1), dpathcmd = checkPath(dpath, argv1[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-	pid2 = fork();
-	if (!pid2)
+	if (*cmd == NULL)
 	{
-		if (execve(dpathcmd, argv1, environ) == -1)
-		{errors(cont, v, t, n);
-			return (0);
+		return (-1);
+	}
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("Error");
+		return (-1);
+	}
+
+	if (pid == 0)
+	{
+		if (_strncmp(*cmd, "./", 2) != 0 && _strncmp(*cmd, "/", 1) != 0)
+		{
+			path_cmd(cmd);
 		}
-		exit(EXIT_FAILURE);
+
+		if (execve(*cmd, cmd, environ) == -1)
+		{
+			print_error(cmd[0], c, argv);
+			free(input);
+			free(cmd);
+			exit(EXIT_FAILURE);
+		}
+		return (EXIT_SUCCESS);
 	}
-	else if (pid2 < 0)
-	{errors(cont, v, t, n);
-		return (0);
-	}
-	else
-	{
-		do {wpid = waitpid(pid2, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	x = (count(ex2, ' ')) + 2;
-	argv2 = _calloc(x, sizeof(char *));
-	splitSpace(argv2, ex2), dpathcmd = checkPath(dpath, argv2[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-		ex = execve(dpathcmd, argv2, environ);
-	return (ex);
+	wait(&status);
+	return (0);
 }
 /**
- * OO - execute two command
- * @copy: comand complete
- * @dpath: directory path
- * @cont: number of commands.
- * @v: command.
- * @t: error of the command.
- * @n: name of the exe.
- * Return: 0
+ * signal_to_handel - Handle ^C
+ * @sig:Captured Signal
+ * Return: Void
  */
-int OO(char copy[], char *dpath[], int cont, char *v, char *t, char *n)
+void signal_to_handel(int sig)
 {
-	int x = 0, a = 0, b = 0, ex = 0, status = 0;
-	char *dpathcmd, *ex1, *ex2;
-	char *ppp[2], **argv1 = NULL, **argv2 = NULL;
-	pid_t pid2, wpid;
-	(void)wpid;
-
-	split(copy, ppp, "|");
-	a = _strlen(ppp[0]), b = _strlen(ppp[1]);
-	ex1 = _calloc(a, sizeof(char)), ex2 = _calloc(b, sizeof(char));
-	_strcpy(ex1, ppp[0]), _strcpy(ex2, ppp[1]);
-	x = (count(ex1, ' ')) + 2, argv1 = _calloc(x, sizeof(char *));
-	splitSpace(argv1, ex1), dpathcmd = checkPath(dpath, argv1[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-	pid2 = fork();
-	if (!pid2)
+	if (sig == SIGINT)
 	{
-		if (execve(dpathcmd, argv1, environ) == -1)
-		{errors(cont, v, t, n);
-			return (0);
-		}
-		exit(EXIT_FAILURE);
+		PRINTER("\n$ ");
 	}
-	else if (pid2 < 0)
-	{errors(cont, v, t, n);
-		return (0);
-	}
-	else
-	{
-		do {wpid = waitpid(pid2, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	x = (count(ex2, ' ')) + 2, argv2 = _calloc(x, sizeof(char *));
-	splitSpace(argv2, ex2), dpathcmd = checkPath(dpath, argv2[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-		ex = execve(dpathcmd, argv2, environ);
-	return (ex);
-}
-
-/**
- * YY - execute two command
- * @copy: comand complete
- * @dpath: directory path
- * @cont: number of commands.
- * @v: command.
- * @t: error of the command.
- * @n: name of the exe.
- * Return: 0
- */
-int YY(char copy[], char *dpath[], int cont, char *v, char *t, char *n)
-{
-	int x = 0, a = 0, b = 0, ex = 0, status = 0;
-	char *dpathcmd, *ex1, *ex2;
-	char *ppp[2], **argv1 = NULL, **argv2 = NULL;
-	pid_t pid2, wpid;
-	(void)wpid;
-
-	split(copy, ppp, "|");
-	a = _strlen(ppp[0]), b = _strlen(ppp[1]);
-	ex1 = _calloc(a, sizeof(char)), ex2 = _calloc(b, sizeof(char));
-	_strcpy(ex1, ppp[0]), _strcpy(ex2, ppp[1]);
-	x = (count(ex1, ' ')) + 2, argv1 = _calloc(x, sizeof(char *));
-	splitSpace(argv1, ex1), dpathcmd = checkPath(dpath, argv1[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-	pid2 = fork();
-	if (!pid2)
-	{
-		if (execve(dpathcmd, argv1, environ) == -1)
-		{errors(cont, v, t, n);
-			return (0);
-		}
-		exit(EXIT_FAILURE);
-	}
-	else if (pid2 < 0)
-	{errors(cont, v, t, n);
-		return (0);
-	}
-	else
-	{
-		do {wpid = waitpid(pid2, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	x = (count(ex2, ' ')) + 2, argv2 = _calloc(x, sizeof(char *));
-	splitSpace(argv2, ex2), dpathcmd = checkPath(dpath, argv2[0]);
-	if (dpathcmd == NULL)
-		errors(cont, v, t, n);
-	else
-		ex = execve(dpathcmd, argv2, environ);
-	return (ex);
 }
