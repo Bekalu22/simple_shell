@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * get_environ - returns the string array copy of our environment variables
+ * get_environ - returns the string array copy of our environment variable
  * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
+ *          constant functions prototype.
  * Return: Always 0
  */
 char **get_environ(info_t *info)
