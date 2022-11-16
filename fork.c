@@ -1,39 +1,108 @@
 #include "shell.h"
+
 /**
- * _fork - forks the processes.
- * @l2: command line.
- * @l: line to free.
- * @c: number of commands.
- * @com: command.
- * @n: name of the exe.
- * Return: an integer
-**/
-int _fork(char *l, char **com, char *l2, int c, char *n)
+ **_realloc -  Reallocates A Memory Block Using Malloc And Free
+ *@ptr: Pointer
+ *@old_size: Previous Size Of The Pointer
+ *@new_size: New Size Of The Pointer
+ *Return: Void Pointer Rellocated Memory
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	pid_t pid = 0, wpid;
-	int status = 0;
-	(void)wpid;
-	pid = fork();
-	if (pid == 0)
+	void *result;
+
+	if (new_size == old_size)
+		return (ptr);
+	if (new_size == 0 && ptr)
 	{
-		if (execute(l2, c, com[0], com[1], n) == -1)
-		{
-			errors(c, com[0], com[1], n);
-			free(l), free(l2), free(com);
-			return (0);
-		}
-		exit(EXIT_FAILURE);
+		free(ptr);
+		return (NULL);
 	}
-	else if (pid < 0)
+	result = malloc(new_size);
+	if (result == NULL)
+		return (NULL);
+	if (ptr == NULL)
 	{
-		errors(c, com[0], com[1], n);
-		return (0);
+		fill_an_array(result, '\0', new_size);
+		free(ptr);
 	}
 	else
 	{
-		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		_memcpy(result, ptr, old_size);
+		free(ptr);
 	}
-	return (1);
+	return (result);
+
+}
+/**
+ * free_all - Free Array Of Char Pointer And Char Pointer
+ * @cmd:Array Pointer
+ * @line:Char Pointer
+ * Return: Void
+ */
+void free_all(char **cmd, char *line)
+{
+	free(cmd);
+	free(line);
+	cmd = NULL;
+	line = NULL;
+}
+
+/**
+ * _memcpy - Copy Byte From Source To Destination
+ * @dest: Destination Pointer
+ * @src: Source Pointer
+ * @n: Size (How Much You Will Copy)
+ *Return: Void Pointer
+ */
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+	{
+		dest[i] = src[i];
+	}
+	return (dest);
+}
+/**
+ * fill_an_array - Fill An Array By Constant Byte
+ * @a:Void Pointer
+ * @el: Int
+ * @len:Length Int
+ *Return: Void Pointer
+ */
+void *fill_an_array(void *a, int el, unsigned int len)
+{
+	char *p = a;
+	unsigned int i = 0;
+
+	while (i < len)
+	{
+		*p = el;
+		p++;
+		i++;
+	}
+	return (a);
+}
+/**
+ * _calloc -  Allocates Memory For An Array, Using Malloc.
+ * @size: Size
+ * Return: Void Pointer
+ */
+void *_calloc(unsigned int size)
+{
+	char *a;
+	unsigned int i;
+
+	if (size == 0)
+	return (NULL);
+	a = malloc(size);
+	if (a == NULL)
+	return (NULL);
+	for (i = 0; i < size; i++)
+	{
+		a[i] = '\0';
+	}
+	return (a);
 }
