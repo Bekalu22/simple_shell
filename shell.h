@@ -1,5 +1,5 @@
-#ifndef shell_l
-#define shell_l
+#ifndef shell_h
+#define shell_h
 
 #define PATH_MAX 4096
 #include <limits.h>
