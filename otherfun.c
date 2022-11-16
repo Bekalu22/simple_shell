@@ -1,112 +1,106 @@
 #include "shell.h"
-/**
- * _strchr - that locates a character in a string
- * @s: character locate
- * @c: character to find
- * Return: character or NULL
- */
-char *_strchr(char *s, char c)
-{
-	unsigned int i = 0;
 
-	while (*(s + i++))
-	{
-		if (s[i] == c)
-			return (&s[i]);
-	}
-	if (*(s + i) == c)
-	{
-		return (&s[i]);
-	}
-	return (0);
-}
 /**
- * _strcmp - Compare two strings
- * @s1: The firts string
- * @s2: The second string
- *
- * Return: indication number
+ * _strcmp - Compare Two String
+ * @s1:String 1
+ * @s2:String 2
+ * Return: 0 If Identical Otherwise How Much Diffrent
  */
 int _strcmp(char *s1, char *s2)
 {
-	char c1, c2;
+int cmp = 0, i, len1, len2;
+len1 = _strlen(s1);
+len2 = _strlen(s2);
 
-	do {
-		c1 = *s1++;
-		c2 = *s2++;
-		if (c1 == '\0')
-			return (c1 - c2);
-	} while (c1 == c2);
-	return (c1 - c2);
+	if (s1 == NULL || s2 == NULL)
+		return (1);
+	if (len1 != len2)
+		return (1);
+	for (i = 0; s1[i]; i++)
+	{
+		if (s1[i] != s2[i])
+		{
+			cmp = s1[i] - s2[i];
+			break;
+		}
+		else
+			continue;
+	}
+	return (cmp);
 }
 /**
- * _strcpy - copies the string pointed to by src,
- * including the terminating null byte, to the
- * buffer pointed to by dest.
- * @dest: destination.
- * @src: source.
- * Return: dest.
+ * _isalpha - Check if Alphabtic
+ *@c: Character
+ * Return: 1 If True 0 If Not
  */
-char *_strcpy(char *dest, char *src)
+int _isalpha(int c)
+{
+if (((c >= 97) && (c <= 122)) || ((c >= 65) && (c <= 90)))
+{
+return (1);
+}
+else
+{
+return (0);
+}
+}
+/**
+ * _itoa - Convert Integer To Char
+ * @n: Int To Convert
+ * Return: Char Pointer
+ */
+char *_itoa(unsigned int n)
+{
+	int len = 0, i = 0;
+	char *s;
+
+	len = intlen(n);
+	s = malloc(len + 1);
+	if (!s)
+		return (NULL);
+	*s = '\0';
+	while (n / 10)
+	{
+		s[i] = (n % 10) + '0';
+		n /= 10;
+		i++;
+	}
+	s[i] = (n % 10) + '0';
+	array_rev(s, len);
+	s[i + 1] = '\0';
+	return (s);
+}
+/**
+ *  array_rev - Reverse Array
+ * @arr:Array To Reverse
+ * @len:Length Of Array
+ * Return: Void(Reverse Array)
+ */
+void array_rev(char *arr, int len)
 {
 	int i;
+	char tmp;
 
-	for (i = 0; *(src + i) != '\0'; i++)
-		dest[i] = src[i];
-
-	dest[i] = '\0';
-
-	return (dest);
-}
-/**
- * _strlen - Write a function that returns the length of a string.
- * @s: pointer char
- * Return: nothing
- */
-int _strlen(char *s)
-{
-	int c = 0;
-
-	while (*(s + c) != '\0')
-		c++;
-
-	return (c);
-}
-/**
- * _itoa - prints integeratoi reverse
- * @n: number
- * Return: 0
- */
-char *_itoa(int n)
-{
-	int num, last = n % 10, digit, exp = 1;
-	int  i = 1, l = 0;
-	char *buffer = NULL;
-
-	n = n / 10;
-	num = n;
-	buffer = _calloc(12, sizeof(int));
-	if (num > 0)
+	for (i = 0; i < (len / 2); i++)
 	{
-		while (num / 10 != 0)
-		{
-			exp = exp * 10;
-			num = num / 10;
-		}
-		num = n;
-		while (exp > 0)
-		{
-			digit = num / exp;
-			buffer[l] = (digit + '0');
-			l++;
-			num = num - (digit * exp);
-			exp = exp / 10;
-			i++;
-		}
+		tmp = arr[i];
+		arr[i] = arr[(len - 1) - i];
+		arr[(len - 1) - i] = tmp;
 	}
-	buffer[l] = (last + '0');
-	l++;
-	buffer[l] = '\0';
+}
+/**
+ * intlen - Determine Length Of Int
+ * @num: Given Int
+ * Return: Length Of Int
+ */
+int intlen(int num)
+{
+	int len = 0;
 
-	return (buffer);
+	while (num != 0)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
 }
