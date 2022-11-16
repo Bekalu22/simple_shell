@@ -1,33 +1,22 @@
 #include "shell.h"
 /**
- * readc - read line command
- * Return: string line with line break
+ *  _prerror - Print Custome Error
+ * @argv:Program Name
+ * @c:Error Count
+ * @cmd:Command
+ * Return: Void
  */
-char *readc(void)
+void _prerror(char **argv, int c, char **cmd)
 {
-	char *line = NULL;
-	size_t bufsize = 0;
-	ssize_t i = 0;
+	char *er = _itoa(c);
 
-	i = getline(&line, &bufsize, stdin);
-	if (i == -1)
-		exit(0);
-	return (line);
-}
-/**
- * _cpy - new string without line break
- * function for getline
- * @dest: destination.
- * @src: source.
- * Return: destination.
- */
-char *_cpy(char *dest, char *src)
-{
-	int i;
-
-	for (i = 0; *(src + i) != '\n'; i++)
-		dest[i] = src[i];
-
-	dest[i] = '\0';
-	return (dest);
+	PRINTER(argv[0]);
+	PRINTER(": ");
+	PRINTER(er);
+	PRINTER(": ");
+	PRINTER(cmd[0]);
+	PRINTER(": Illegal number: ");
+	PRINTER(cmd[1]);
+	PRINTER("\n");
+	free(er);
 }
