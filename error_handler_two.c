@@ -2,9 +2,9 @@
 
 /**
  * _erratoi - converts a string to an integer
- * @s: the string to be converted
+ * @s: the strings to be converted
  * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
+ *    -1 on error
  */
 int _erratoi(char *s)
 {
