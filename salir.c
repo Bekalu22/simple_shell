@@ -1,43 +1,32 @@
 #include "shell.h"
-/**
- * salir - exit the shell.
- * @line: line of command
- * @line2: line to free
- * @cont: number of commands.
- * @com: array of command and arguments.
- * @name: name of the exe.
- * Return: an integer.
-**/
-int salir(char *line, char *line2, int cont, char **com, char *name, int e)
-{
-	int i = 0, w = 1;
 
-	if (com[1] == NULL)
+/**
+ * parse_cmd - Parse Line Of Input
+ * @input:User Input To Parse
+ * Return: Array Of Char (Parsed):Simple Shell
+ */
+char **parse_cmd(char *input)
+{
+	char **tokens;
+	char *token;
+	int i, buffsize = BUFSIZE;
+
+	if (input == NULL)
+		return (NULL);
+	tokens = malloc(sizeof(char *) * buffsize);
+	if (!tokens)
 	{
-		free(line);
-		free(line2);
-		free(com);
-		exit(e);
+		perror("hsh");
+		return (NULL);
 	}
-	for (; com[1][i] != '\0'; i++)
+
+	token = _strtok(input, "\n ");
+	for (i = 0; token; i++)
 	{
-		w = _isdigit(com[1][i]);
-		if (w == 0)
-			break;
+		tokens[i] = token;
+		token = _strtok(NULL, "\n ");
 	}
-	if (w == 1)
-		e = _atoi(com[1]);
-	else
-		e = 2;
-	if (e >= 0 && e + 1 > 0 && e != 2)
-	{
-		free(line);
-		free(com);
-		exit(e);
-	}
-	else
-	{
-		errors(cont, com[0], com[1], name);
-		return (e);
-	}
+	tokens[i] = NULL;
+
+	return (tokens);
 }
