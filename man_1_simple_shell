@@ -1,104 +1,103 @@
-.\" Manpage for Shell
-
-.TH dash 1 "28 August 2019" "0.1" "mini-shell man page"
-
+.TH man 1 "16 November 2022" "0.20" "HSH man page"
 .SH NAME
-    hsh - PepeGrillo Shell clone interface to the Unix system kernel
-
+.B hsh 
+- Simple Shell Studying purpose
 .SH SYNOPSIS
-    $ [command] [-flags ]
-
+.B ./hsh 
+[command] [options] [FILE]
+.SH COPYRIGHT
+.B hsh 
+is Copyright (C) Bekalu sisay and Lemlem Tsafete tsafete.
 .SH DESCRIPTION
-     A Shell provides you with an interface to the systems kernel.
-          It gathers input from you and  executes  programs  based on
-	       that input. When a program  finishes executing, it displays
-	            that command's output followed by a new prompt.
-		    .SH Compiling
-		         gcc-4.8 -Wall -Werror -Wextra -pedantic *.c -o hsh
-			 .SH Running
-			     $ ./hsh
-			     .SH PROMPT
-			          The  prompt,  $,  which  is  called  the command prompt, is
-				       issued by the shell. While the prompt is displayed, you can
-				            type a command.
-					         Shell reads your input after you press Enter. It determines
-						      the command you want  executed by looking at the first word
-						           of  your  input. A  word  is  an unbroken set of characters.
-							        Spaces and tabs separate words.
+.B hsh 
+(Simple Shell) is an end of semester project for students at Holberton School where we expore, 
+understand and build a working functional simple shell program.
+.B Overview
 
-
+The simple shell is a simplified iteration of a command line interpreter, similar to 
+.B bash or 
+.B dash. 
+.I FORMAT [ARGUMENT]...
 .SH OPTIONS
+.B hsh
+operates in both 
+.I interactive 
+and 
+.I non-interactive
+ mode. The user may initiate 
+.B simple shell
+and begin working or initate 
+.B simple shell
+using commands meant to be run by the program.
+.SH ARGUMENTS
+The first argument, argument 0 is understood to be the command to be run by 
+.B simple shell
+and arguments following as modifiers or options.
+.SH INVOCATION
+.B hsh
+may be invoked with the same functionality in 
+.I interactive 
+or 
+.I non-interactive 
+mode.  The user may quit the program by typing "exit", "Ctrl + D",  on the command line.
+When the program quits or a command has been executed, 
+.B simple shell 
+returns with a new prompt: "$ "
 
-Built-ins
-.br
- env
-  Prints the current environment
-  .br
-  .br
-       exit [n]
-       .br
-            Causes the shell to exit with the exit status  specified by
-	         n. If n is omitted then the exit status is that of the last
-		      command executed. (An end of file will  also exit  from the
-		           shell).
-			   .br
-			   .br
-			   Examples of Commands
-			   .br
-			        pwd
-				     .br
-				          Prints the name of the current directory. man pwd for more info
-					  .br
-					       ls
-					            .br
-						         Lists the files in the current working directory. man ls for more
-							      info.
-							      .br
-							           echo
-								        .br
-									     Displays a string to standard output. man echo for more info.
-									     .br
-									          sh
-										       .br
-										            A shell program written by Ken Thompson. man sh for more info.
-											         This was used to compare the results with our shell.
+.B Example
+.IP
 
-.SH ENVIRONMENT
+$./hsh
 
-Examples of Environment Variables
+$pwd
 
-     PATH
-          A list of directories for executables.
+Username@your-regular-prompt:~$
 
-     PWD
-          The current parent directory
+$
+
+$/bin/pwd
+
+Username@your-regular-prompt:~$
+$
+
+.SH RESERVED WORDS
+.B exit: 
+quits the program, exits the shell.
+
+.B env: 
+prints the environment variables
+
+.SH HISTORY
+The 
+.B history 
+built-in displays the history list, one command per line, preceded with line numbers, starting with 0. On exit the entire history is written to a file named
+.I simple_shell_history
+in the 
+.I $HOME
+directory.
+.SH SHELL BUILTIN COMMANDS
+The commands 
+.B exit
+,
+.B env
+,
+.B help
+and
+.B echo
+are handled automatically by 
+.B hsh
 
 .SH SEE ALSO
-    sh(1),  csh(1),  environ(7),  execve(2), exit(3), getline(3),
-        kill(2), malloc(3), perror(3), signal(2), strtok(3), wait(2),
-	    _exit(2), isatty(3).
+.I sh(1)
+,
+.I bash(1)
+,
+.I _printf(3)
 
-.SH EXAMPLE CODE
-
-$ ls
-.br
-use path for list the files
-.br
-.br
-$ echo l
-.br
-use path for found echo and execute file
-.br
-.br
-$ /bin/ls
-.br
-for list the files in the current directory or
-.br
-.br
-$ /bin/pwd
-.br
-for display the current directory address
-
-
-.SH AUTHORS
-     Edgar Quintero - Jimmer Hernandez
+.SH BUGS
+No Known bug , please 
+Report 
+.B hsh
+bugs to https://github.com/Bekalu22/simple_shell/issues
+.SH AUTHOR
+Bekalu Nibret - Lemlem tsifete Tsifete
