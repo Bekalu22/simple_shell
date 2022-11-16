@@ -2,7 +2,7 @@
 
 /**
  * hsh - main shell loop
- * @info: the parameter & return info struct
+ * @info: the parameters & return info struct
  * @av: the argument vector from main()
  *
  * Return: 0 on success, 1 on error, or error code
@@ -44,7 +44,7 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin - finds a builtin command
+ * find_builtin - finds a builtin commands
  * @info: the parameter & return info struct
  *
  * Return: -1 if builtin not found,
