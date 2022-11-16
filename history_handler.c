@@ -2,8 +2,8 @@
 
 /**
  * get_history_file - gets the file history
- * @info: parameter struct
- * Return: allocated string containg history file
+ * @info: parameters struct
+ * Return: allocated string containg history files
  */
 
 char *get_history_file(info_t *info)
