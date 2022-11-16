@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- **_strncpy - copies a string from one buffer to another
- *@dest: the destination string to be copied to
+ **_strncpy - copies a string from ones buffer to another
+ *@dest: the destination strings to be copied to
  *@src: the source string
- *@n: the amount of characters to be copied
+ *@n: the amount of character to be copied
  *Return: the concatenated string
  */
 char *_strncpy(char *dest, char *src, int n)
