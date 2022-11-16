@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * list_len - determines length of linked list
+ * list_len - determines length of linked lists
  * @h: pointer to first node
  *
- * Return: size of list
+ * Return: size of lists
  */
 size_t list_len(const list_t *h)
 {
