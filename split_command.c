@@ -1,41 +1,34 @@
-#define T_B_SIZE 1024
-#define T_CUT " \t\r\n\a"
 #include "shell.h"
 /**
- * split_command - split a line into tokens.
- * @line: line to split.
- * Return: An array of token.
-**/
-char **split_command(char *line)
+ * print_number -Print Unsigned Int Putchar
+ * @n: Unisigned Integer
+ * Return: Void
+ */
+void print_number(unsigned int n)
 {
-	int buffer = T_B_SIZE, i = 0;
-	char **tokens = malloc(buffer);
-	char *token;
+	unsigned int x = n;
 
-	if (!tokens)
+	if ((x / 10) > 0)
+		print_number(x / 10);
+
+	_putchar(x % 10 + '0');
+}
+/**
+ * print_number_in -Print Number Putchar
+ * @n:Integer
+ * Return: void
+ */
+void print_number_in(int n)
+{
+	unsigned int x = n;
+
+	if (n < 0)
 	{
-		fprintf(stderr, "lsh: allocation error\n");
-		exit(EXIT_FAILURE);
+		_putchar('-');
+		x = -x;
 	}
+	if ((x / 10) > 0)
+		print_number(x / 10);
 
-	token = strtok(line, T_CUT);
-	while (token != NULL)
-	{
-		tokens[i] = token;
-		i++;
-		if (i >= buffer)
-		{
-			buffer += T_B_SIZE;
-			tokens = realloc(tokens, buffer);
-			if (!tokens)
-			{
-				fprintf(stderr, "lsh: allocation error\n");
-				exit(EXIT_FAILURE);
-			}
-		}
-
-		token = strtok(NULL, T_CUT);
-	}
-	tokens[i] = NULL;
-	return (tokens);
+	_putchar(x % 10 + '0');
 }
