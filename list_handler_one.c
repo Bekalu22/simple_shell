@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * add_node - adds a new node at the beginging of the linkded list
- * @head: address of pointer to head node
+ * add_node - adds a new node at the beginging of the linkded lists
+ * @head: address of pointers to head node
  * @str: str field of node
  * @num: node index used by history
  *
