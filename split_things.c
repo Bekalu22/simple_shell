@@ -1,41 +1,29 @@
 #include "shell.h"
-/**
- * splitSpace - cut each space
- * @argv: array save cut
- * @line2: name of file command complete
- * Return: 0
- */
-void splitSpace(char *argv[], char line2[])
-{
-	char *puntero;
-	int i = 0;
 
-	puntero = strtok(line2, " ");
-	while (puntero)
-	{
-		argv[i] = puntero;
-		puntero = strtok(NULL, " ");
-		i++;
-	}
-	argv[i] = NULL;
+/**
+ * prompt - Display Shell Prompt
+ */
+void prompt(void)
+{
+	PRINTER("$ ");
 }
 /**
- * split - cut each delimiter
- * @line2: command
- * @slicedCommand: array save cut
- * @c: delimiter
- * Return: 0
+ * print_error - Display Error Based on Command and How Many Time Shell Looped
+ * @input:User Input
+ * @counter:Simple Shell Count Loop
+ * @argv:Program Name
+ * Return: Void
  */
-void split(char line2[], char *slicedCommand[], char c[])
+void print_error(char *input, int counter, char **argv)
 {
-	char *puntero;
-	int i = 0;
+	char *er;
 
-	puntero = strtok(line2, c);
-	while (puntero)
-	{
-		slicedCommand[i] = puntero;
-		puntero = strtok(NULL, c);
-		i++;
-	}
+	PRINTER(argv[0]);
+	PRINTER(": ");
+	er = _itoa(counter);
+	PRINTER(er);
+	free(er);
+	PRINTER(": ");
+	PRINTER(input);
+	PRINTER(": not found\n");
 }
